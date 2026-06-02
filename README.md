@@ -12,11 +12,15 @@
 </p>
 
 [![CI](https://github.com/YYC-Cube/YYC3-AI-Family-Multi-Agent-Platform-/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/YYC-Cube/YYC3-AI-Family-Multi-Agent-Platform-/actions/workflows/ci.yml)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7.3-blue.svg)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18.3.1-61dafb.svg)](https://reactjs.org/)
-[![Bun](https://img.shields.io/badge/Bun-1.3.11-black.svg)](https://bun.sh/)
-[![Vite](https://img.shields.io/badge/Vite-6.0.0-646cff.svg)](https://vitejs.dev/)
+[![Deploy](https://github.com/YYC-Cube/YYC3-AI-Family-Multi-Agent-Platform-/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/YYC-Cube/YYC3-AI-Family-Multi-Agent-Platform-/actions/workflows/deploy.yml)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-pro.yyc3.top-0C70F2?logo=github)](https://pro.yyc3.top)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7.3-blue.svg?logo=typescript)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18.3.1-61dafb.svg?logo=react)](https://reactjs.org/)
+[![Bun](https://img.shields.io/badge/Bun-1.3.11-black.svg?logo=bun)](https://bun.sh/)
+[![Vite](https://img.shields.io/badge/Vite-6.0.0-646cff.svg?logo=vite)](https://vitejs.dev/)
+[![pnpm](https://img.shields.io/badge/pnpm-9.x-F69220.svg?logo=pnpm)](https://pnpm.io/)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
 **🌹 智亦师亦友亦伯乐；谱一言一语一华章**
 
@@ -991,6 +995,33 @@ describe('useAI', () => {
 ---
 
 ## 🚢 部署指南
+
+### 🌐 GitHub Pages 自动部署（推荐）
+
+项目已配置 GitHub Actions 自动部署至 **GitHub Pages**，域名：**[pro.yyc3.top](https://pro.yyc3.top)**
+
+```yaml
+# .github/workflows/deploy.yml
+触发条件：push 到 main 分支
+流水线：install → typecheck → build → deploy → GitHub Pages
+```
+
+**部署流程**：
+
+1. 代码推送至 `main` 分支自动触发部署
+2. CI 流水线完成 TypeCheck + Build
+3. 构建产物自动部署至 GitHub Pages
+4. 通过 DNS CNAME `pro.yyc3.top` 访问
+
+**手动部署**：
+
+```bash
+# 本地构建
+pnpm build
+
+# 构建产物在 dist/ 目录
+# GitHub Actions 会自动部署
+```
 
 ### 生产环境部署
 

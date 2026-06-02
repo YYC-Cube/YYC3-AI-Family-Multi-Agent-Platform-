@@ -1,0 +1,78 @@
+# ============================================================
+# YYC³ AI Family · GitHub Pages 自动部署
+# 人从众曌众从人 · 亦师亦友亦伯乐
+# ============================================================
+#
+# 域名：pro.yyc3.top（已通过 DNS 认证）
+# 触发条件：push 到 main 分支
+# 流水线：install → build → deploy → GitHub Pages
+# ============================================================
+
+name: 🚀 Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# 确保同时只有一个部署在运行
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+# GITHUB_TOKEN 需要以下权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    name: 📦 Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔍 TypeCheck
+        run: pnpm exec tsc --noEmit
+
+      - name: 🏗️ Build
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      - name: ⚙️ Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: 📤 Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+
+  deploy:
+    name: 🌐 Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

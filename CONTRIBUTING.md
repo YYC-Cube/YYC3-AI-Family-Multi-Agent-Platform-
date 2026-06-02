@@ -114,7 +114,24 @@ cd bun-server && bun run dev
 # 终端 2：前端
 pnpm dev
 
-# 访问 http://localhost:3200
+# 访问 http://localhost:5173
+```
+
+### CI/CD 流水线速览
+
+| 工作流 | 触发条件 | 说明 |
+|--------|----------|------|
+| **CI** (`.github/workflows/ci.yml`) | push/PR to `main`/`develop` | TypeCheck + Lint + Vitest + Bun Test + Build |
+| **Deploy** (`.github/workflows/deploy.yml`) | push to `main` | Build → GitHub Pages (pro.yyc3.top) |
+| **Release** (`.github/workflows/release.yml`) | tag `v*.*.*` | Changelog + GitHub Release + Discussion |
+
+**本地自检命令**（与 CI 一致）：
+
+```bash
+pnpm exec tsc --noEmit     # TypeCheck
+pnpm exec eslint .          # Lint
+pnpm exec vitest run        # Vitest
+pnpm run build              # 构建验证
 ```
 
 ---
