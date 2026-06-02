@@ -1,0 +1,75 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+*.lcov
+
+# Production
+dist/
+build/
+.next/
+out/
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+bun.lockb
+pnpm-debug.log*
+
+# Local env files
+.env
+.env*.local
+.env.production
+.env.development
+.env.test
+
+# Vite
+.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Bun Server
+bun-server/.env
+bun-server/knowledge/
+bun-server/logs/
+bun-server/plugins/
+# SQLite 数据库文件（含家人状态、私信等动态数据，不应入库）
+*.db
+*.sqlite
+*.sqlite3
+bun-server/data/
+bun-server/*.db
+bun-server/*.sqlite
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Cache
+.cache/
+.parcel-cache/
+.eslintcache

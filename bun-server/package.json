@@ -1,0 +1,31 @@
+{
+  "name": "yyc3-ai-family-server",
+  "version": "2.1.0",
+  "description": "YYC³ AI Family - Bun Runtime Backend (灵肉贯通·PostgreSQL主库版)",
+  "scripts": {
+    "dev": "bun run --watch index.ts",
+    "start": "bun run index.ts",
+    "db:init": "bun run db-init.ts",
+    "db:verify": "bun run db-init.ts --verify",
+    "db:reset": "bun run db-init.ts --reset",
+    "db:pg-export": "bun run db-init.ts --pg",
+    "db:pg-apply": "psql -p 5433 -U yyc3_max -d yyc3_family < ../supabase/family-schema.sql",
+    "health": "curl -s http://localhost:3080/api/health | bun -e 'console.log(JSON.stringify(JSON.parse(await Bun.stdin.text()),null,2))'",
+    "config": "curl -s http://localhost:3080/api/config | bun -e 'console.log(JSON.stringify(JSON.parse(await Bun.stdin.text()),null,2))'",
+    "mcp:tools": "curl -s http://localhost:3080/api/mcp/tools | bun -e 'console.log(JSON.stringify(JSON.parse(await Bun.stdin.text()),null,2))'",
+    "workflow:list": "curl -s http://localhost:3080/api/workflow/list | bun -e 'console.log(JSON.stringify(JSON.parse(await Bun.stdin.text()),null,2))'",
+    "plugin:list": "curl -s http://localhost:3080/api/plugin/list | bun -e 'console.log(JSON.stringify(JSON.parse(await Bun.stdin.text()),null,2))'",
+    "kb:stats": "curl -s http://localhost:3080/api/kb/stats | bun -e 'console.log(JSON.stringify(JSON.parse(await Bun.stdin.text()),null,2))'",
+    "ide:overview": "curl -s http://localhost:3080/api/ide/overview | bun -e 'console.log(JSON.stringify(JSON.parse(await Bun.stdin.text()),null,2))'"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "postgres": "^3.4.5"
+  },
+  "optionalDependencies": {
+    "ioredis": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

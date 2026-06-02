@@ -1,0 +1,323 @@
+# ================================================================
+# YYC3 AI Family - Environment Configuration
+# ================================================================
+# Usage:
+#   cd bun-server
+#   cp env-template.txt .env
+#   # Fill in BIGMODEL_API_KEY (preferred) or DEEPSEEK_API_KEY (minimum requirement)
+#   bun install && bun run dev
+#
+# All values shown are defaults from config.ts S1-S10.
+# Lines starting with # are comments. Uncomment to override.
+# ================================================================
+
+
+# ===========================================
+# S1  Core Server
+# ===========================================
+PORT=3080
+SERVER_NAME=YYC3-AI-Family
+NODE_ENV=development
+# LOG_LEVEL options: debug | info | warn | error
+LOG_LEVEL=info
+
+
+# ===========================================
+# S2  LLM Providers (Multi-Model)
+# ===========================================
+# --- Global LLM Settings ---
+# Primary provider used for agent_call: anthropic | openai | ollama | deepseek | qwen
+LLM_PRIMARY_PROVIDER=deepseek
+# Fallback if primary fails
+LLM_FALLBACK_PROVIDER=ollama
+# Sampling temperature (0.0 - 1.0)
+LLM_TEMPERATURE=0.7
+# Enable SSE streaming responses (experimental)
+LLM_STREAMING_ENABLED=false
+# Request timeout in ms
+LLM_REQUEST_TIMEOUT_MS=30000
+# Real-to-Mock ratio: "real:mock" per window  (cost control)
+LLM_RATIO_REAL_TO_MOCK=1:2
+LLM_RATIO_WINDOW_SECONDS=60
+
+# --- Anthropic Claude ---
+# ANTHROPIC_API_KEY=
+# ANTHROPIC_MODEL=claude-sonnet-4-20250514
+# ANTHROPIC_MAX_TOKENS=2048
+# ANTHROPIC_BASE_URL=https://api.anthropic.com
+
+# --- OpenAI GPT ---
+# OPENAI_API_KEY=
+# OPENAI_MODEL=gpt-4o
+# OPENAI_MAX_TOKENS=2048
+# OPENAI_BASE_URL=https://api.openai.com/v1
+
+# --- Ollama (Local) ---
+# Set to true to enable local Ollama inference
+OLLAMA_ENABLED=true
+OLLAMA_BASE_URL=http://localhost:11434
+# Available on this machine: qwen3-coder:30b | deepseek-coder:33b | llama3.2:3b-instruct-q4_K_M | qwen2.5-coder:1.5b | llama3.2:1b
+OLLAMA_MODEL=qwen3-coder:30b
+
+# --- DeepSeek (OpenAI-compatible) ---
+# >>> P0: Fill this to enable the primary LLM <<<
+DEEPSEEK_API_KEY=
+DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
+
+# --- Qwen (Alibaba DashScope, also OpenAI-compatible) ---
+# QWEN_API_KEY=
+# QWEN_MODEL=qwen-max
+# QWEN_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+
+# --- BigModel / 智谱 GLM (OpenAI-compatible) ---
+# 感恩智谱大模型授权，致敬GLM-PC的卓越支持！
+# >>> YYC³ Guidelines首选 Provider <<<
+# Get your API key at: https://open.bigmodel.cn
+BIGMODEL_API_KEY=
+BIGMODEL_MODEL=glm-4-plus
+BIGMODEL_MAX_TOKENS=4096
+BIGMODEL_BASE_URL=https://open.bigmodel.cn/api/paas/v4
+
+
+# ===========================================
+# S2.1  Per-Role Model Assignment (一角一模型)
+# ===========================================
+# Each family member can have its own dedicated provider + model.
+# If not set, falls back to DEFAULT_ROLE_MODELS in config.ts.
+#
+# Env pattern: ROLE_{ROLE_ID}_PROVIDER / ROLE_{ROLE_ID}_MODEL
+#
+# Recommended BigModel GLM mapping:
+#   PM/CA     → glm-4-plus    (最强推理，最终裁决/伦理审查)
+#   架构师    → glm-4-plus    (架构设计需要深度思考)
+#   织码工匠  → codegeex-4    (代码生成专用模型)
+#   守护哨兵  → glm-4-plus    (安全分析不能马虎)
+#   中枢灵脉  → glm-4-flash   (编排调度，速度优先)
+#   协作使者  → glm-4-air     (日常沟通，平衡性价比)
+#
+# ROLE_PRODUCT_MANAGER_PROVIDER=bigmodel
+# ROLE_PRODUCT_MANAGER_MODEL=glm-4-plus
+# ROLE_CHIEF_ARCHITECT_PROVIDER=bigmodel
+# ROLE_CHIEF_ARCHITECT_MODEL=glm-4-plus
+# ROLE_AI_ARCHITECT_PROVIDER=bigmodel
+# ROLE_AI_ARCHITECT_MODEL=glm-4-plus
+# ROLE_CODE_ARTISAN_PROVIDER=bigmodel
+# ROLE_CODE_ARTISAN_MODEL=codegeex-4
+# ROLE_SENTINEL_PROVIDER=bigmodel
+# ROLE_SENTINEL_MODEL=glm-4-plus
+# ROLE_CENTRAL_PULSE_PROVIDER=bigmodel
+# ROLE_CENTRAL_PULSE_MODEL=glm-4-flash
+# ROLE_COLLABORATOR_PROVIDER=bigmodel
+# ROLE_COLLABORATOR_MODEL=glm-4-air
+#
+# Per-role fallback (optional, falls back to global LLM_FALLBACK_PROVIDER if not set):
+# ROLE_CODE_ARTISAN_FALLBACK_PROVIDER=ollama
+# ROLE_CODE_ARTISAN_FALLBACK_MODEL=qwen3-coder:30b
+#
+# Per-role overrides (optional):
+# ROLE_AI_ARCHITECT_MAX_TOKENS=8192
+# ROLE_AI_ARCHITECT_TEMPERATURE=0.3
+
+
+# ===========================================
+# S3  MCP Protocol Server
+# ===========================================
+MCP_ENABLED=true
+MCP_SERVER_NAME=yyc3-family-mcp
+# Transport: stdio | sse | websocket
+MCP_TRANSPORT=stdio
+MCP_TOOLS_ENABLED=true
+MCP_TOOLS_DIR=./mcp-tools
+MCP_RESOURCES_ENABLED=true
+MCP_PROMPTS_ENABLED=true
+
+
+# ===========================================
+# S4  Workflow Engine
+# ===========================================
+WORKFLOW_ENABLED=true
+WORKFLOW_MAX_CONCURRENT=5
+WORKFLOW_STEP_TIMEOUT_MS=60000
+WORKFLOW_RETRY_MAX=3
+WORKFLOW_RETRY_DELAY_MS=2000
+
+# --- Creation Pipeline ---
+WORKFLOW_CREATION_PIPELINE_ENABLED=true
+WORKFLOW_CREATION_AUTO_ADVANCE=false
+WORKFLOW_CREATION_REQUIRE_APPROVAL=true
+
+# --- CI/CD Integration (optional) ---
+# WORKFLOW_CICD_ENABLED=false
+# WORKFLOW_CICD_WEBHOOK_URL=
+# WORKFLOW_CICD_WEBHOOK_SECRET=
+
+# --- Cron Jobs (optional) ---
+# WORKFLOW_CRON_ENABLED=false
+# WORKFLOW_CRON_JOBS=
+
+
+# ===========================================
+# S5  Plugin System
+# ===========================================
+PLUGIN_ENABLED=true
+PLUGIN_DIR=./plugins
+PLUGIN_SANDBOX=true
+PLUGIN_MAX_MEMORY_MB=128
+PLUGIN_TIMEOUT_MS=10000
+PLUGIN_ENABLED_LIST=code-quality,security-scanner,git-helper
+# PLUGIN_MARKETPLACE_URL=
+PLUGIN_AUTO_UPDATE=false
+
+
+# ===========================================
+# S6  Knowledge Base (Six-Module KB)
+# ===========================================
+KB_ENABLED=true
+KB_STORAGE_DIR=./knowledge
+
+# Vector database backend: memory | chroma | qdrant | milvus | pgvector
+# "memory" = no external dependency, pure in-process (good for dev)
+KB_VECTOR_DB=memory
+
+# --- ChromaDB (if KB_VECTOR_DB=chroma) ---
+# CHROMA_URL=http://localhost:8000
+# CHROMA_COLLECTION=yyc3_family_knowledge
+
+# --- Qdrant (if KB_VECTOR_DB=qdrant) ---
+# QDRANT_URL=http://localhost:6333
+# QDRANT_COLLECTION=yyc3_family
+# QDRANT_API_KEY=
+
+# --- Embedding Provider ---
+# Provider: anthropic | openai | ollama | local
+# "local" = simple TF-IDF fallback (no API call, zero cost)
+# To use Ollama embeddings:  KB_EMBEDDING_PROVIDER=ollama  +  ollama pull nomic-embed-text
+KB_EMBEDDING_PROVIDER=local
+# Model name for OpenAI/Anthropic embedding APIs
+KB_EMBEDDING_MODEL=text-embedding-3-small
+# Ollama-specific embedding model (separate from LLM model)
+KB_EMBEDDING_OLLAMA_MODEL=nomic-embed-text
+# Dimensions: 0 = auto-detect from provider (recommended)
+# Defaults: openai=1536, anthropic=1024, ollama/nomic=768, local=512
+KB_EMBEDDING_DIMENSIONS=0
+
+# --- RAG Parameters ---
+KB_CHUNK_SIZE=512
+KB_CHUNK_OVERLAP=64
+KB_TOP_K=5
+KB_SIMILARITY_THRESHOLD=0.7
+KB_RERANK_ENABLED=false
+
+# --- Document Sources & Auto-Index ---
+# Paths relative to bun-server/ directory
+KB_DOC_SOURCES=../docs
+KB_AUTO_INDEX_ENABLED=true
+# Re-scan interval (ms). 300000 = 5 minutes
+KB_AUTO_INDEX_INTERVAL_MS=300000
+
+
+# ===========================================
+# S7  IDE Bridge
+# ===========================================
+IDE_ENABLED=true
+IDE_PROJECT_ROOT=../
+
+# --- Code Analysis ---
+IDE_ANALYSIS_ENABLED=true
+IDE_ANALYSIS_LANGUAGE=typescript
+IDE_ANALYSIS_INCLUDE=src/**/*.ts,src/**/*.tsx,components/**/*.tsx,hooks/**/*.ts,services/**/*.ts,types/**/*.ts
+IDE_ANALYSIS_EXCLUDE=node_modules,dist,.git,build
+
+# --- Lint ---
+IDE_LINT_ENABLED=true
+# Engine: biome | eslint | oxlint
+IDE_LINT_ENGINE=biome
+IDE_LINT_FIX_ON_SAVE=false
+# IDE_LINT_CONFIG_PATH=
+
+# --- Git Integration ---
+IDE_GIT_ENABLED=true
+IDE_GIT_AUTO_COMMIT=false
+# Commit format: conventional | gitmoji | plain
+IDE_GIT_COMMIT_FORMAT=conventional
+# Branch strategy: gitflow | trunk | github-flow
+IDE_GIT_BRANCH_STRATEGY=gitflow
+IDE_GIT_PR_AUTO_REVIEW=false
+
+# --- Terminal (security-sensitive, disabled by default) ---
+IDE_TERMINAL_ENABLED=false
+IDE_TERMINAL_SHELL=bash
+IDE_TERMINAL_ALLOWED_COMMANDS=ls,cat,grep,find,bun,npm,git
+
+# --- File Watcher ---
+IDE_WATCHER_ENABLED=true
+IDE_WATCHER_DEBOUNCE_MS=300
+IDE_WATCHER_IGNORE=node_modules,.git,dist,build,.next
+
+# --- TypeScript Checker ---
+IDE_TS_CHECK_ENABLED=true
+IDE_TS_CONFIG_PATH=../tsconfig.json
+
+
+# ===========================================
+# S8  Database & Redis Cache
+# ===========================================
+# PostgreSQL (optional - omit to use in-memory mode)
+# DATABASE_URL=postgresql://yyc3:yyc3_password@localhost:5432/yyc3_family
+# DB_POOL_SIZE=10
+# DB_SSL_ENABLED=false
+# DB_AUTO_MIGRATE=true
+
+# Redis (optional - omit to use in-memory mode)
+# REDIS_URL=redis://localhost:6379
+# REDIS_PASSWORD=
+# REDIS_DB=0
+REDIS_KEY_PREFIX=yyc3:
+REDIS_SIGNAL_CACHE_TTL=3600
+REDIS_SIGNAL_CACHE_MAX=200
+
+
+# ===========================================
+# S9  Security & Auth
+# ===========================================
+# Auth disabled by default for local dev
+AUTH_ENABLED=false
+JWT_SECRET=yyc3-family-secret-change-in-production
+JWT_EXPIRES_HOURS=24
+
+# CORS: "*" allows all origins (safe for local dev)
+CORS_ORIGIN=*
+
+# Rate limiting
+RATE_LIMIT_ENABLED=true
+RATE_LIMIT_WINDOW_MS=60000
+RATE_LIMIT_MAX_REQUESTS=100
+# Stricter limit for LLM calls (cost control)
+RATE_LIMIT_LLM_MAX=20
+
+
+# ===========================================
+# S10  Monitor & Observability
+# ===========================================
+MONITOR_ENABLED=true
+MONITOR_METRICS_ENDPOINT=/api/metrics
+
+# Log format: json | text | pretty
+LOG_FORMAT=pretty
+LOG_FILE_ENABLED=false
+# LOG_FILE_PATH=./logs/server.log
+# LOG_FILE_MAX_SIZE_MB=50
+# LOG_FILE_MAX_FILES=10
+
+# Distributed tracing (optional)
+TRACE_ENABLED=false
+# Exporter: console | otlp | jaeger
+# TRACE_EXPORTER=console
+# OTLP_ENDPOINT=http://localhost:4318
+
+# Health check intervals
+HEALTH_CHECK_INTERVAL_MS=30000
+HEALTH_CHECK_DB=true
+HEALTH_CHECK_REDIS=true
+HEALTH_CHECK_LLM=true
