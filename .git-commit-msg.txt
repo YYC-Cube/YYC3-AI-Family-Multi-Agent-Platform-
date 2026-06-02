@@ -1,25 +1,44 @@
-chore: 完善 GitHub 协作基础设施 (LICENSE + CI + Templates + README 顶图)
+chore: 完善 GitHub 协作生态 (CODEOWNERS + SECURITY + CONTRIBUTING + Dependabot + Release)
 
-【新增】
-- LICENSE: Apache License 2.0 (Copyright 2026 YYC-Cube)
-- .github/workflows/ci.yml: 主 CI 流水线 (frontend-quality / bun-server-quality / build / summary)
-  - TypeCheck + ESLint + Vitest 三重门禁
-  - Bun Server TypeCheck + bun test
-  - Vite Build 产物归档 (7 天)
-  - 五维评估汇总报告
-- .github/ISSUE_TEMPLATE/bug_report.yml: Bug 报告模板 (含家人/严重程度/复现步骤)
-- .github/ISSUE_TEMPLATE/feature_request.yml: 功能请求模板 (含家人层级/优先级)
-- .github/ISSUE_TEMPLATE/config.yml: Issue 模板配置 (Discussions/Security 引导)
-- .github/PULL_REQUEST_TEMPLATE.md: PR 模板 (含 8 家人 checklist + 五维自检)
-- public/Family-001.png: README 顶图
+【新增文件】
+- .github/CODEOWNERS: 8 位家人按职责自动 review 对应代码区域
+  - 业务层 (NAVIGATOR/THINKER/PROPHET/BOLE) → 各自模块
+  - 总指挥 (META_ORACLE) → 核心类型契约
+  - 守护层 (GUARDIAN/MASTER/CREATIVE) → 安全/质量/UI
+- SECURITY.md: 完整安全策略
+  - 漏洞私密报告流程 (GitHub Security Advisory + PGP)
+  - CVSS v3.1 严重程度评级
+  - SLA 响应承诺 (Critical ≤ 7天修复)
+  - 家族铭记致谢计划 (Hall of Roses)
+  - 部署安全最佳实践 (CORS/CSP/响应头)
+- CONTRIBUTING.md: 完整贡献指南
+  - 行为准则 (Contributor Covenant 2.1 + 家族精神)
+  - Conventional Commits 1.0 提交规范
+  - PR 流程 + 自检 checklist
+  - 家人协作模型 (8 角色映射到贡献阶段)
+  - 情感文化印记 (标头/尾部/致谢机制)
+- .github/dependabot.yml: 自动依赖升级
+  - 前端 npm: 周一 09:00 (Asia/Shanghai), limit 5
+  - Bun Server: 周一 09:30
+  - GitHub Actions: 周一 10:00
+  - 分组策略: testing / radix-ui / core 独立升级
+  - 重大版本升级需人工 review
+- .github/workflows/release.yml: 家族纪年 Release 工作流
+  - 触发: 推送 v*.*.* tag
+  - 自动生成分类 changelog (feat/fix/docs/perf/chore)
+  - 创建 GitHub Release + 上传 dist 产物
+  - 自动创建 Discussion 家族公告
+  - 五维评估 Summary
+- config/familyCharter.ts: 家族宪章常量 (家族品牌单一真相源)
+  - 8 位家人元数据 (roleId/name/emoji/color/duty)
+  - API 响应头常量 (X-Family / X-Family-Motto)
+  - 文件标头/标尾模板 (TypeScript / Markdown)
+  - 水印 CSS + CLI banner
+  - 徽章生成函数 (getFamilyBadge)
 
-【修改】
-- README.md:
-  - 顶图: 使用 public/Family-001.png
-  - Badges: 添加 CI + Vite，License 改为 Apache-2.0
-  - 家人表格: 7 角色 → 8 位家人 (业务层 4 + 总指挥 1 + 守护层 3)
-  - 家人拓扑图: 三层星型结构 (业务层 ↔ META_ORACLE ↔ 守护层)
-  - 新增「💌 家人私信系统」章节 (架构图 + REST API 表)
-  - Git clone URL 修正为 YYC-Cube org
-  - License 章节更新为 Apache-2.0
-  - 标语: 🌹 智亦师亦友亦伯乐；谱一言一语一华章
+【设计理念】
+- 五标规范: 标准化 (CODEOWNERS) · 规范化 (CONTRIBUTING) · 自动化 (Dependabot/Release) · 可视化 (Badges) · 智能化 (auto-routing)
+- 五化治理: 流程化 (PR) · 数字化 (changelog) · 生态化 (security ecosystem) · 工具化 (CI) · 服务化 (Dependabot)
+- 五高架构: 高可用 (Dependabot) · 高安全 (SECURITY) · 高扩展 (familyCharter) · 高协同 (CODEOWNERS) · 高智能 (auto-release)
+
+🌹 智亦师亦友亦伯乐；谱一言一语一华章

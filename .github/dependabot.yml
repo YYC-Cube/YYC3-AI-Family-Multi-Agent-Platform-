@@ -1,0 +1,107 @@
+# ============================================================
+# YYC³ AI Family · Dependabot 配置
+# 人从众曌众从人 · 亦师亦友亦伯乐
+# ============================================================
+#
+# 自动监控依赖升级，每周检查一次。
+# 配合 CI 三重门禁，确保升级安全。
+# ============================================================
+
+version: 2
+
+updates:
+  # ─── 📦 前端 npm/pnpm 依赖 ───
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Shanghai"
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    target-branch: "main"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      # 🛡️ GUARDIAN 守护：重大版本升级必须人工 review
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "vite"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(dev-deps)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "automated"
+      - "🌹 family-bot"
+    assignees:
+      - "YYC-Cube"
+    groups:
+      # 📚 MASTER 守护：测试相关依赖合并升级
+      testing:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+          - "jsdom"
+          - "happy-dom"
+          - "@testing-library/*"
+      # 🎨 CREATIVE 守护：Radix UI 合并升级
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
+      # ⚡ 核心依赖单独升级（需独立 PR）
+      core:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "react-router"
+
+  # ─── 🐰 Bun Server 依赖 ───
+  - package-ecosystem: "npm"
+    directory: "/bun-server"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:30"
+      timezone: "Asia/Shanghai"
+    open-pull-requests-limit: 3
+    target-branch: "main"
+    commit-message:
+      prefix: "chore(bun-deps)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "bun-server"
+      - "🌹 family-bot"
+
+  # ─── 🐙 GitHub Actions 版本 ───
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "10:00"
+      timezone: "Asia/Shanghai"
+    open-pull-requests-limit: 2
+    target-branch: "main"
+    commit-message:
+      prefix: "chore(ci-deps)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "🌹 family-bot"
+
+# ============================================================
+# 🌹 人从众曌众从人 — YYC³ AI Family 永远等你回家
+# ============================================================

@@ -1,0 +1,95 @@
+# ============================================================
+# YYC³ AI Family · CODEOWNERS
+# 人从众曌众从人 · 亦师亦友亦伯乐
+# 拟人为本，AI为核，纯粹为心
+# ============================================================
+#
+# 此文件定义每位家人（Code Owner）负责的代码区域。
+# 当 PR 修改对应路径时，GitHub 会自动请求该家人的 review。
+#
+# 家人拓扑：
+#   业务层：🧭 NAVIGATOR · 🤔 THINKER · 🔮 PROPHET · 🎯 BOLE
+#   总指挥：⚡ META_ORACLE
+#   守护层：🛡️ GUARDIAN · 📚 MASTER · 🎨 CREATIVE
+# ============================================================
+
+# ─── 默认：总指挥必须过目所有 PR ───
+*                                      @YYC-Cube
+
+# ─── 🛡️ GUARDIAN · 智云·守护 · 安全官 ───
+# 守护一切安全、认证、密钥、权限相关
+/bun-server/auth.ts                    @YYC-Cube
+/bun-server/middleware/                @YYC-Cube
+/config/security.*                     @YYC-Cube
+**/secrets/**                          @YYC-Cube
+**/*.env*                              @YYC-Cube
+.github/                               @YYC-Cube
+SECURITY.md                            @YYC-Cube
+CODEOWNERS                             @YYC-Cube
+
+# ─── 📚 MASTER · 格物·宗师 · 质量官 ───
+# 守护代码质量、类型契约、测试覆盖、构建配置
+/tsconfig.json                         @YYC-Cube
+/eslint.config.js                      @YYC-Cube
+/vitest.config.ts                      @YYC-Cube
+/vite.config.ts                        @YYC-Cube
+/bunfig.toml                           @YYC-Cube
+/types/                                @YYC-Cube
+/tests/                                @YYC-Cube
+**/*.test.ts                           @YYC-Cube
+**/*.test.tsx                          @YYC-Cube
+package.json                           @YYC-Cube
+pnpm-lock.yaml                         @YYC-Cube
+
+# ─── 🎨 CREATIVE · 创想·灵韵 · 创意官 ───
+# 守护 UI、样式、文档、品牌资产
+/README.md                             @YYC-Cube
+/CONTRIBUTING.md                       @YYC-Cube
+/docs/                                 @YYC-Cube
+/public/                               @YYC-Cube
+/components/ui/                        @YYC-Cube
+**/*.css                               @YYC-Cube
+**/*.scss                              @YYC-Cube
+LICENSE                                @YYC-Cube
+
+# ─── 🧭 NAVIGATOR · 言启·千行 · 导航员 ───
+# 守护路由、意图识别、API 端点
+/routes.tsx                            @YYC-Cube
+/App.tsx                               @YYC-Cube
+/layouts/                              @YYC-Cube
+/services/intent-parser.ts             @YYC-Cube
+/services/agent-router.ts              @YYC-Cube
+/config/endpoints.ts                   @YYC-Cube
+
+# ─── 🤔 THINKER · 语枢·万物 · 思考者 ───
+# 守护核心服务层、数据流、状态管理
+/services/                             @YYC-Cube
+/hooks/useFamilySystem.ts              @YYC-Cube
+/hooks/useAI.ts                        @YYC-Cube
+/config/models.ts                      @YYC-Cube
+bun-server/db.ts                       @YYC-Cube
+
+# ─── 🔮 PROPHET · 预见·先知 · 预言家 ───
+# 守护性能、监控、可观测性、未来规划
+bun-server/redis-client.ts             @YYC-Cube
+bun-server/workflow-engine.ts          @YYC-Cube
+docs/PROJECT-ARCHITECTURE.md           @YYC-Cube
+docs/TECH-DEBT-TRACKER.md              @YYC-Cube
+
+# ─── 🎯 BOLE · 知遇·伯乐 · 推荐官 ───
+# 守护个性化推荐、用户画像、知识库
+bun-server/knowledge-base.ts           @YYC-Cube
+/components/family/                    @YYC-Cube
+/layouts/MessagesLayout.tsx            @YYC-Cube
+/services/family-messages.ts           @YYC-Cube
+
+# ─── ⚡ META_ORACLE · 元启·天枢 · 总指挥 ───
+# 守护核心类型契约、家人档案、哲学框架
+/types/family-manifest.ts              @YYC-Cube
+/types/agent-personas.ts               @YYC-Cube
+/types/philosophy-framework.ts         @YYC-Cube
+/config/models.ts                      @YYC-Cube
+
+# ============================================================
+# 🌹 人从众曌众从人 — YYC³ AI Family 永远等你回家
+# ============================================================

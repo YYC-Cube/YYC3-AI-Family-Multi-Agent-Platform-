@@ -1,0 +1,228 @@
+# ============================================================
+# YYC³ AI Family · Release 工作流
+# 人从众曌众从人 · 亦师亦友亦伯乐
+# ============================================================
+#
+# 触发条件：推送 v*.*.* 格式的 tag
+# 流水线：
+#   1. 生成 changelog (基于 conventional commits)
+#   2. 创建 GitHub Release
+#   3. 上传构建产物
+#   4. 发布家族公告（Discussion + 通知）
+# ============================================================
+
+name: 🌹 Release · 家族纪年
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - 'v*.*.*-*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '发布版本号（如 v2.0.1）'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  discussions: write
+
+jobs:
+  release:
+    name: 🚀 Publish Family Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 完整历史，用于生成 changelog
+
+      - name: 🛠️ Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔍 TypeCheck
+        run: pnpm exec tsc --noEmit
+
+      - name: 🏗️ Build
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      - name: 📦 Package dist artifact
+        run: |
+          tar -czf yyc3-family-dist-${{ github.ref_name }}.tar.gz dist/
+          zip -r yyc3-family-dist-${{ github.ref_name }}.zip dist/
+
+      - name: 📝 Generate Changelog
+        id: changelog
+        run: |
+          # 提取上一个 tag 到当前 tag 的 commit history
+          PREV_TAG=$(git describe --tags --abbrev=0 ${{ github.ref_name }}^ 2>/dev/null || echo "")
+
+          if [ -z "$PREV_TAG" ]; then
+            # 首次发布：取全部历史
+            RANGE=""
+          else
+            RANGE="$PREV_TAG..HEAD"
+          fi
+
+          # 生成分类 changelog
+          {
+            echo "## 🌹 YYC³ AI Family — ${{ github.ref_name }}"
+            echo ""
+            echo "> **人从众曌众从人 · 亦师亦友亦伯乐**"
+            echo ""
+            echo "发布时间：$(date '+%Y-%m-%d %H:%M:%S %Z')"
+            echo ""
+
+            # ✨ Features
+            FEATS=$(git log $RANGE --oneline --no-merges --grep="^feat" 2>/dev/null)
+            if [ -n "$FEATS" ]; then
+              echo "### ✨ 新功能 (Features)"
+              echo ""
+              echo "$FEATS" | sed 's/^[a-f0-9]\+ feat/✨/' | sed 's/^[a-f0-9]\+ /\- /' | head -30
+              echo ""
+            fi
+
+            # 🐛 Bug Fixes
+            FIXES=$(git log $RANGE --oneline --no-merges --grep="^fix" 2>/dev/null)
+            if [ -n "$FIXES" ]; then
+              echo "### 🐛 Bug 修复 (Bug Fixes)"
+              echo ""
+              echo "$FIXES" | sed 's/^[a-f0-9]\+ fix/🐛/' | sed 's/^[a-f0-9]\+ /\- /' | head -30
+              echo ""
+            fi
+
+            # 📚 Documentation
+            DOCS=$(git log $RANGE --oneline --no-merges --grep="^docs" 2>/dev/null)
+            if [ -n "$DOCS" ]; then
+              echo "### 📚 文档 (Documentation)"
+              echo ""
+              echo "$DOCS" | sed 's/^[a-f0-9]\+ docs/📚/' | sed 's/^[a-f0-9]\+ /\- /' | head -20
+              echo ""
+            fi
+
+            # ⚡ Performance
+            PERF=$(git log $RANGE --oneline --no-merges --grep="^perf" 2>/dev/null)
+            if [ -n "$PERF" ]; then
+              echo "### ⚡ 性能优化 (Performance)"
+              echo ""
+              echo "$PERF" | sed 's/^[a-f0-9]\+ perf/⚡/' | sed 's/^[a-f0-9]\+ /\- /' | head -10
+              echo ""
+            fi
+
+            # 🔧 Chore
+            CHORES=$(git log $RANGE --oneline --no-merges --grep="^chore\|^ci\|^refactor" 2>/dev/null)
+            if [ -n "$CHORES" ]; then
+              echo "### 🔧 维护与重构 (Maintenance)"
+              echo ""
+              echo "$CHORES" | sed 's/^[a-f0-9]\+ chore/🔧/' | sed 's/^[a-f0-9]\+ ci/🤖/' | sed 's/^[a-f0-9]\+ refactor/♻️/' | sed 's/^[a-f0-9]\+ /\- /' | head -15
+              echo ""
+            fi
+
+            # 📊 Stats
+            COMMITS_COUNT=$(git log $RANGE --oneline --no-merges 2>/dev/null | wc -l | tr -d ' ')
+            CONTRIBUTORS=$(git log $RANGE --format='%aN' --no-merges 2>/dev/null | sort -u | wc -l | tr -d ' ')
+
+            echo "### 📊 本次发布统计"
+            echo ""
+            echo "| 指标 | 数值 |"
+            echo "|---|---|"
+            echo "| 📝 Commits | ${COMMITS_COUNT} |"
+            echo "| 👥 Contributors | ${CONTRIBUTORS} |"
+            echo "| 📦 Artifact | \`dist/\` (tar.gz + zip) |"
+            echo ""
+
+            echo "### 🌹 致谢"
+            echo ""
+            echo "感恩每一位为家族贡献温暖的家人："
+            echo ""
+            git log $RANGE --format='- @%aN' --no-merges 2>/dev/null | sort -u
+            echo ""
+
+            echo "---"
+            echo ""
+            echo "**🌹 智亦师亦友亦伯乐；谱一言一语一华章**"
+            echo ""
+            echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG:-$(git rev-list --max-parents=0 HEAD | head -1)}...${{ github.ref_name }}"
+          } > CHANGELOG-${{ github.ref_name }}.md
+
+          echo "Generated changelog:"
+          cat CHANGELOG-${{ github.ref_name }}.md
+
+      - name: 🚀 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: 🌹 YYC³ AI Family ${{ github.ref_name }}
+          body_path: CHANGELOG-${{ github.ref_name }}.md
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          files: |
+            yyc3-family-dist-${{ github.ref_name }}.tar.gz
+            yyc3-family-dist-${{ github.ref_name }}.zip
+            CHANGELOG-${{ github.ref_name }}.md
+          fail_on_unmatched_files: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 💬 Create Discussion (家族公告)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync(`CHANGELOG-${{ github.ref_name }}.md`, 'utf8');
+
+            const discussion = await github.rest.discussions.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🌹 YYC³ AI Family ${{ github.ref_name }} 已发布`,
+              body: body + '\n\n---\n💬 欢迎家人在此讨论本版本的使用体验与建议。'
+            });
+            console.log('🌹 Discussion created:', discussion.data.html_url);
+
+      - name: 📤 Upload changelog artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: changelog-${{ github.ref_name }}
+          path: CHANGELOG-${{ github.ref_name }}.md
+          retention-days: 90
+
+  # ==========================================
+  # Job: 五维评估 Summary
+  # ==========================================
+  summary:
+    name: 🌹 Release Summary
+    runs-on: ubuntu-latest
+    needs: [release]
+    if: always()
+    steps:
+      - name: 📊 Summary
+        run: |
+          echo "## 🌹 YYC³ AI Family — Release ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Item | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| 🚀 Release Job | ${{ needs.release.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 📦 Artifact | dist.tar.gz + dist.zip |" >> $GITHUB_STEP_SUMMARY
+          echo "| 💬 Discussion | Auto-created |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🌹 智亦师亦友亦伯乐；谱一言一语一华章" >> $GITHUB_STEP_SUMMARY
+
+# ============================================================
+# 🌹 人从众曌众从人 — YYC³ AI Family 永远等你回家
+# ============================================================
