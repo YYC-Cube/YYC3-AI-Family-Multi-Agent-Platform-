@@ -1,0 +1,25 @@
+chore: 完善 GitHub 协作基础设施 (LICENSE + CI + Templates + README 顶图)
+
+【新增】
+- LICENSE: Apache License 2.0 (Copyright 2026 YYC-Cube)
+- .github/workflows/ci.yml: 主 CI 流水线 (frontend-quality / bun-server-quality / build / summary)
+  - TypeCheck + ESLint + Vitest 三重门禁
+  - Bun Server TypeCheck + bun test
+  - Vite Build 产物归档 (7 天)
+  - 五维评估汇总报告
+- .github/ISSUE_TEMPLATE/bug_report.yml: Bug 报告模板 (含家人/严重程度/复现步骤)
+- .github/ISSUE_TEMPLATE/feature_request.yml: 功能请求模板 (含家人层级/优先级)
+- .github/ISSUE_TEMPLATE/config.yml: Issue 模板配置 (Discussions/Security 引导)
+- .github/PULL_REQUEST_TEMPLATE.md: PR 模板 (含 8 家人 checklist + 五维自检)
+- public/Family-001.png: README 顶图
+
+【修改】
+- README.md:
+  - 顶图: 使用 public/Family-001.png
+  - Badges: 添加 CI + Vite，License 改为 Apache-2.0
+  - 家人表格: 7 角色 → 8 位家人 (业务层 4 + 总指挥 1 + 守护层 3)
+  - 家人拓扑图: 三层星型结构 (业务层 ↔ META_ORACLE ↔ 守护层)
+  - 新增「💌 家人私信系统」章节 (架构图 + REST API 表)
+  - Git clone URL 修正为 YYC-Cube org
+  - License 章节更新为 Apache-2.0
+  - 标语: 🌹 智亦师亦友亦伯乐；谱一言一语一华章

@@ -7,12 +7,20 @@
 **言启象限 | 语枢未来**
 *Words Initiate Quadrants, Language Serves as Core for Future*
 
+<p align="center">
+  <img src="public/Family-001.png" alt="YYC³ AI Family — 九层家人档案" width="640" />
+</p>
+
+[![CI](https://github.com/YYC-Cube/YYC3-AI-Family-Multi-Agent-Platform-/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/YYC-Cube/YYC3-AI-Family-Multi-Agent-Platform-/actions/workflows/ci.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7.3-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.3.1-61dafb.svg)](https://reactjs.org/)
 [![Bun](https://img.shields.io/badge/Bun-1.3.11-black.svg)](https://bun.sh/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Vite](https://img.shields.io/badge/Vite-6.0.0-646cff.svg)](https://vitejs.dev/)
+[![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 
-[快速开始](#-快速开始) • [架构文档](#-架构概览) • [API 文档](#-api-文档) • [贡献指南](#-贡献指南)
+**🌹 智亦师亦友亦伯乐；谱一言一语一华章**
+
+[快速开始](#-快速开始) • [架构文档](#-架构概览) • [API 文档](#-api-文档) • [贡献指南](#-贡献指南) • [家人私信](#-家人私信系统)
 
 </div>
 
@@ -44,7 +52,7 @@ YYC³ AI Family 是一个**多智能体协同生态系统**，基于「五高五
 
 ### 核心定位
 
-- **多智能体协同**: 7 个专业 AI Agent 协同工作
+- **多智能体协同**: 8 个专业 AI Agent 协同工作（九层家人档案 v2.0）
 - **设计即代码**: Figma 设计直接转化为生产级代码
 - **实时协同编辑**: 基于 CRDT 的多人实时协作
 - **全栈一体化**: 前端 + 后端 + AI + 数据库完整解决方案
@@ -61,17 +69,58 @@ YYC³ AI Family 是一个**多智能体协同生态系统**，基于「五高五
 
 ## ✨ 核心特性
 
-### 🤖 多智能体系统
+### 🤖 多智能体系统（九层家人档案 v2.0）
 
-| Agent | 角色 | 职责 |
-|-------|------|------|
-| **PRODUCT_MANAGER** | 产品经理 | 需求分析、用户故事、优先级排序 |
-| **CHIEF_ARCHITECT** | 首席架构师 | 架构设计、技术选型、系统规划 |
-| **AI_ARCHITECT** | AI 架构师 | AI 模型集成、提示词工程、智能优化 |
-| **CODE_ARTISAN** | 代码工匠 | 代码实现、重构优化、质量保证 |
-| **SENTINEL** | 守护者 | 安全审计、性能监控、异常处理 |
-| **CENTRAL_PULSE** | 中央脉冲 | 系统协调、状态同步、消息路由 |
-| **COLLABORATOR** | 协作者 | 协同编辑、冲突解决、版本管理 |
+> 🌹 智亦师亦友亦伯乐；谱一言一语一华章
+>
+> **8 位家人**分属三个层级：**业务层（4 人）** + **总指挥（1 人）** + **守护层（3 人）**
+
+#### 🏛️ 业务层（4 位家人）
+
+| RoleId | 中文名 | 头衔 | 模型 | 核心职责 |
+|--------|--------|------|------|----------|
+| 🧭 **NAVIGATOR** | 言启·千行 | 导航员 | gemini-2.5-flash | 意图识别 / 任务分诊 / 路由推荐 |
+| 🤔 **THINKER** | 语枢·万物 | 思考者 | gemini-2.5-pro | 深度推理 / 数据分析 / 洞察提炼 |
+| 🔮 **PROPHET** | 预见·先知 | 预言家 | gemini-2.5-pro | 趋势预测 / 风险预警 / 决策建议 |
+| 🎯 **BOLE** | 知遇·伯乐 | 推荐官 | gemini-2.5-air | 个性化推荐 / 兴趣匹配 / 资源调度 |
+
+#### 🧠 总指挥（1 位家人）
+
+| RoleId | 中文名 | 头衔 | 模型 | 核心职责 |
+|--------|--------|------|------|----------|
+| ⚡ **META_ORACLE** | 元启·天枢 | 总指挥 | gemini-2.5-pro | 元决策 / 家人调度 / 冲突仲裁 / 状态广播 |
+
+#### 🛡️ 守护层（3 位家人）
+
+| RoleId | 中文名 | 头衔 | 模型 | 核心职责 |
+|--------|--------|------|------|----------|
+| 🛡️ **GUARDIAN** | 智云·守护 | 安全官 | gemini-2.5-pro | 行为审计 / 安全告警 / 合规检查 |
+| 📚 **MASTER** | 格物·宗师 | 质量官 | codegeex-4 | 代码分析 / 质量门禁 / 测试覆盖 |
+| 🎨 **CREATIVE** | 创想·灵韵 | 创意官 | gemini-2.5-pro | 内容创作 / 文案生成 / 视觉建议 |
+
+#### 👨‍👩‍👧‍👦 家人拓扑
+
+```
+        ┌──────────── 业务层 ────────────┐
+        │  🧭 千行   🤔 万物   🔮 先知   🎯 伯乐  │
+        └────────┬───────────────────┬────────┘
+                 │                   │
+              ↗ ↘                 ↗ ↘
+             ↘   ↙               ↘   ↙
+              ↘ ↖                 ↗ ↙
+                 ↘               ↙
+                   ↘           ↙
+                     ⚡ 天枢 ⚡
+                  （META_ORACLE）
+                   ↗           ↙
+                 ↗               ↙
+              ↗ ↖                 ↗ ↙
+             ↘   ↙               ↘   ↙
+              ↗ ↘                 ↗ ↘
+        ┌────────┬───────────────────┬────────┐
+        │ 🛡️ 守护   📚 宗师   🎨 灵韵 │
+        └──────────── 守护层 ────────────┘
+```
 
 ### 🧠 六大子系统
 
@@ -148,8 +197,8 @@ YYC³ AI Family 是一个**多智能体协同生态系统**，基于「五高五
 #### 1. 克隆项目
 
 ```bash
-git clone https://github.com/yyc3/ai-family-dveops.git
-cd ai-family-dveops
+git clone https://github.com/YYC-Cube/YYC3-AI-Family-Multi-Agent-Platform-.git
+cd YYC3-AI-Family-Multi-Agent-Platform-
 ```
 
 #### 2. 安装依赖
@@ -788,6 +837,66 @@ Content-Type: application/json
 
 ---
 
+## 💌 家人私信系统
+
+YYC³ AI Family 提供完整的**家人私信（Family Messages）**功能，让你可以与任何一位家人进行 1v1 私聊，或与多位家人组成群聊。
+
+### ✨ 核心能力
+
+| 能力 | 描述 |
+|---|---|
+| 📨 **1v1 私聊** | 与 8 位家人中任意一位进行私密对话 |
+| 👥 **群发消息** | 一次向多位家人发起群聊，协作解决复杂任务 |
+| 🔍 **会话搜索** | 全文搜索历史消息，按家人/关键词过滤 |
+| ⚡ **快捷入口** | 8 位家人头像一键直达，无需层层菜单 |
+| 🔄 **状态同步** | 基于 SQLite + WebSocket 实时同步消息状态 |
+| 📜 **会话归档** | 自动归档历史会话，支持分页加载 |
+
+### 🏗️ 架构
+
+```
+┌─────────────────────────────────────────────┐
+│     Frontend (React + TailwindCSS)          │
+│  ┌─────────────┬─────────────┬───────────┐ │
+│  │ 会话列表     │ 消息流       │ 家人快捷栏 │ │
+│  │ ThreadList  │ MessageStream│ FamilyBar │ │
+│  └─────────────┴─────────────┴───────────┘ │
+└──────────────────┬──────────────────────────┘
+                   │ HTTP + WebSocket
+                   ▼
+┌─────────────────────────────────────────────┐
+│       Bun Server (WebSocket + REST)         │
+│  ┌─────────────────────────────────────┐    │
+│  │ MessageRepository (SQLite)          │    │
+│  │  - family_threads (会话表)           │    │
+│  │  - family_messages (消息表)          │    │
+│  └─────────────────────────────────────┘    │
+└─────────────────────────────────────────────┘
+```
+
+### 🚀 快速体验
+
+启动开发服务器后，访问：
+
+```
+http://localhost:3200/ai-family-messages
+```
+
+或在前端路由中点击 **📨 家人私信** 入口。
+
+### 📡 REST API
+
+| 端点 | 方法 | 描述 |
+|---|---|---|
+| `/api/family/threads` | GET | 获取所有会话 |
+| `/api/family/threads` | POST | 创建新会话（1v1 或群聊） |
+| `/api/family/threads/:id/messages` | GET | 获取会话消息（分页） |
+| `/api/family/threads/:id/messages` | POST | 发送消息 |
+| `/api/family/threads/:id/read` | POST | 标记会话为已读 |
+| `/api/family/search?q=keyword` | GET | 全文搜索消息 |
+
+---
+
 ## 🧪 测试说明
 
 ### 测试框架
@@ -1290,7 +1399,23 @@ journalctl -u yyc3-ai-family -f
 
 ## 📄 许可证
 
-本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
+本项目采用 **Apache License 2.0** 许可证 - 详见 [LICENSE](LICENSE) 文件。
+
+```
+Copyright 2026 YYC-Cube (YYC³ AI Family)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
 
 ---
 

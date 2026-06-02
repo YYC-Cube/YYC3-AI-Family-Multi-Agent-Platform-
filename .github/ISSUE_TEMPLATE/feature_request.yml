@@ -1,0 +1,67 @@
+name: ✨ 功能请求
+description: 提出新功能或改进建议
+title: "[FEAT] "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您的创意！请描述您希望看到的功能或改进。
+        
+        🌹 万象归元于云枢；深栈智启新纪元
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 💡 您想解决什么问题？
+      description: 这个功能请求的动机是什么？您目前无法做什么？
+      placeholder: 例如：当前私信系统不支持消息搜索高亮...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 🎯 您期望的解决方案
+      description: 您希望我们如何解决？
+      placeholder: 例如：在搜索框输入关键词时，匹配的消息高亮显示...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 🔄 您考虑过的替代方案
+      description: 您是否考虑过其他实现方式？
+
+  - type: dropdown
+    id: layer
+    attributes:
+      label: 🏛️ 涉及的家人层级（多选）
+      options:
+        - 业务层（NAVIGATOR / THINKER / PROPHET / BOLE）
+        - 总指挥（META_ORACLE）
+        - 守护层（GUARDIAN / MASTER / CREATIVE）
+        - 跨层级 / 全局
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: ⭐ 对您的重要程度
+      options:
+        - 🟢 Nice to have — 锦上添花
+        - 🟡 Important — 显著提升体验
+        - 🟠 Critical — 影响核心使用
+        - 🔴 Blocker — 阻塞当前工作
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 📜 行为准则
+      options:
+        - label: 我已搜索现有 Issues 与 Discussion
+          required: true
