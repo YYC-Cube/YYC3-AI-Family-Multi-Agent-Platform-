@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
-    "postgres": "^3.4.5"
+    "postgres": "^3.4.9"
   },
   "optionalDependencies": {
     "ioredis": "^5.4.0"
