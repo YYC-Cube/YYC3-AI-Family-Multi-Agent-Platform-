@@ -19,11 +19,11 @@
     "ide:overview": "curl -s http://localhost:3080/api/ide/overview | bun -e 'console.log(JSON.stringify(JSON.parse(await Bun.stdin.text()),null,2))'"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0",
+    "@anthropic-ai/sdk": "^0.115.0",
     "postgres": "^3.4.9"
   },
   "optionalDependencies": {
-    "ioredis": "^5.4.0"
+    "ioredis": "^5.11.1"
   },
   "devDependencies": {
     "@types/bun": "latest"
